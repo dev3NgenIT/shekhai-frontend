@@ -2,7 +2,6 @@ import Image from "next/image";
 import Content from "./content";
 
 export default function Hero({ mentorData }) {
-  console.log(mentorData, "mentorData in Hero component");
 
   // Extract the banner image from mentorData
   const bannerImage = mentorData?.banner_image;

@@ -2,7 +2,6 @@ import Image from "next/image";
 import Perk from "./perk";
 
 export default function Perks({ data }) {
-  console.log(data, "perks");
 
   // Check if data is valid
   if (!data || !Array.isArray(data) || data.length === 0) {

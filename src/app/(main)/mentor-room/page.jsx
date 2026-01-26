@@ -20,7 +20,6 @@ export default function Page() {
   useEffect(() => {
     const fetchMentorRoomData = async () => {
       try {
-        console.log('Fetching mentor room data from:', API_BASE_URL);
 
         const response = await fetch(API_BASE_URL);
 
@@ -29,10 +28,6 @@ export default function Page() {
         }
 
         const result = await response.json();
-
-        console.log('=== MENTOR ROOM API RESPONSE ===');
-        console.log('Success:', result.success);
-        console.log('Message:', result.message);
 
         if (result.success && result.data) {
           setMentorData(result.data);
@@ -54,7 +49,7 @@ export default function Page() {
       setError(null);
 
       try {
-        console.log("Fetching webinars from:", `https://shekhai-server.onrender.com/api/v1/webinars`);
+        
         const response = await fetch(`https://shekhai-server.onrender.com/api/v1/webinars?status=published`);
 
         if (!response.ok) {
@@ -62,7 +57,6 @@ export default function Page() {
         }
 
         const result = await response.json();
-        console.log("API Response:", result);
 
         if (result.success) {
           const allWebinars = result.data || [];

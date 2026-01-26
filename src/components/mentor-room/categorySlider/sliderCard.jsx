@@ -1,7 +1,6 @@
 import Image from "next/image";
 
 export default function SliderCard({ icon }) {
-  console.log(icon, "icon");
   // Now 'icon' is a single object: {name: "Career Strategy", icon: "career-strategy.svg"}
 
   return (

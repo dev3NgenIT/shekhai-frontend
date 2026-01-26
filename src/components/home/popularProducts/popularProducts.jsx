@@ -1,8 +1,7 @@
 import CategoryCard from "./categoryCard";
 import Header from "./header";
 
-export default function PopularProducts({ data }) {  // Changed from 'product' to 'data'
-  console.log("PopularProducts data:", data);
+export default function PopularProducts({ data }) {  // 
 
   // Extract products from data
   // First check if data is directly the products array

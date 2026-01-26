@@ -142,8 +142,6 @@ export default function Component() {
     setIsCalendarOpen(true);
   };
 
-  // Debug: Add console.log to check state
-  console.log("isYearView:", isYearView);
 
   // Add useEffect to track state changes
   useEffect(() => {

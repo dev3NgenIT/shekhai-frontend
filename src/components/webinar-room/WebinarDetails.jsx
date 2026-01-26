@@ -20,7 +20,7 @@ import {
 } from "react-icons/lu";
 import { LucideCheckCircle, LucideCheckCircle2 } from 'lucide-react';
 
-const API_BASE_URL = "http://localhost:8080/api/v1";
+const API_BASE_URL = "https://shekhai-server.onrender.com/api/v1";
 
 export default function WebinarDetailPage() {
   const params = useParams();

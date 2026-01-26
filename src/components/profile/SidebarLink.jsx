@@ -6,7 +6,6 @@ import { usePathname } from "next/navigation";
 export default function SidebarLink({ link, children }) {
   const pathname = usePathname();
 
-  console.log(pathname);
 
   return (
     <Link

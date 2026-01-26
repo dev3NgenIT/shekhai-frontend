@@ -21,7 +21,6 @@ export default function WebinarRoomPage() {
     setError(null);
 
     try {
-      console.log("Fetching webinars from:", `${API_BASE_URL}/webinars`);
       const response = await fetch(`${API_BASE_URL}/webinars?status=published`);
       
       if (!response.ok) {
@@ -29,7 +28,6 @@ export default function WebinarRoomPage() {
       }
       
       const result = await response.json();
-      console.log("API Response:", result);
       
       if (result.success) {
         const allWebinars = result.data || [];

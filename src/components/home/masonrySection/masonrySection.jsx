@@ -2,7 +2,6 @@ import NormalCard from "./normalCard";
 import SeparatedCard from "./separatedCard";
 
 export default function MasonrySection({ data }) {
-  console.log(data, "MasonrySection data");
   
   // Extract categories from data
   const categories = data?.categories || data;

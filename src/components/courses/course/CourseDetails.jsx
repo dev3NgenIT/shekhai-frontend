@@ -49,7 +49,6 @@ export default function CourseDetails() {
           `https://shekhai-server.onrender.com/api/v1/courses/${courseId}`,
         );
 
-        console.log("Course API Response:", response.data);
 
         if (response.data.success) {
           const courseData = response.data.course || response.data.data;
