@@ -1,12 +1,14 @@
-import React from 'react';
+import { Suspense } from 'react';
 import CheckOutForms from "@/components/CheckOut/CheckOutForms";
 
-const page = () => {
+const Page = () => {
   return (
     <div>
-      <CheckOutForms />
+      <Suspense fallback={<div>Loading checkout...</div>}>
+        <CheckOutForms />
+      </Suspense>
     </div>
   );
 };
 
-export default page;
+export default Page;
