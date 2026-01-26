@@ -1,0 +1,66 @@
+# ===============================
+# Dependencies
+# ===============================
+node_modules/
+.pnp
+.pnp.*
+.yarn/*
+
+# Allow Yarn Berry essentials
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# ===============================
+# Next.js build output & cache
+# ===============================
+.next/
+out/
+build/
+.cache/
+dist/
+
+# Webpack / Turbopack cache
+**/.webpack-cache
+**/.turbo
+**/cache
+
+# ===============================
+# Testing
+# ===============================
+coverage/
+
+# ===============================
+# Logs
+# ===============================
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# ===============================
+# Environment files (secrets)
+# ===============================
+.env
+.env.*
+!.env.example
+
+# ===============================
+# Vercel
+# ===============================
+.vercel/
+
+# ===============================
+# OS / Editor
+# ===============================
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ===============================
+# TypeScript
+# ===============================
+*.tsbuildinfo
+next-env.d.ts
