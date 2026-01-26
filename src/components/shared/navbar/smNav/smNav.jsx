@@ -62,10 +62,10 @@ const links = [
     title: "courses",
     href: "/courses",
   },
-  {
-    title: "project showcase",
-    href: "/project-showcase",
-  },
+  // {
+  //   title: "project showcase",
+  //   href: "/project-showcase",
+  // },
   {
     title: "Mentor Room",
     href: "/mentor-room",

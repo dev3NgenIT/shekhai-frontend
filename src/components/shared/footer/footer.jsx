@@ -9,7 +9,7 @@ const footerLinks = [
     links: [
       { title: "Courses", href: "/courses" },
       { title: "Mentor Room", href: "/mentor-room" },
-      { title: "Project Showcase", href: "/project-showcase" },
+      // { title: "Project Showcase", href: "/project-showcase" },
       { title: "Webinar", href: "/webinar-room" },
       { title: "Community", href: "/community" },
     ],
