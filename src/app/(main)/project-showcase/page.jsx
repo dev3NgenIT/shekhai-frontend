@@ -14,7 +14,7 @@ export default function Page() {
         <ProjectCarousel />
       </div>
 
-      <ProjectsSection />
+      {/* <ProjectsSection /> */}
 
       <CategoryProjects />
 
