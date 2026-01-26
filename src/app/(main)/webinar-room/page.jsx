@@ -7,7 +7,7 @@ import BannerCTA from "@/components/webinar-room/bannerCTA/bannerCTA";
 import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 import { Toaster, toast } from 'react-hot-toast';
 
-const API_BASE_URL = "http://localhost:8080/api/v1";
+const API_BASE_URL = "https://shekhai-server.onrender.com/api/v1";
 
 export default function WebinarRoomPage() {
   const [webinars, setWebinars] = useState([]);

@@ -22,7 +22,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 
-const API_BASE_URL = "http://localhost:8080/api/v1";
+const API_BASE_URL = "https://shekhai-server.onrender.com/api/v1";
 
 // Create a stable InputField component outside to prevent re-renders
 const InputField = ({ 

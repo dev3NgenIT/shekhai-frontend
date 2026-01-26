@@ -13,7 +13,7 @@ import { toast, Toaster } from "react-hot-toast";
 const API_BASE_URL =
   process.env.NEXT_PUBLIC_API_URL ||
   // "https://shekhai-server.onrender.com/api/v1";
-  "http://localhost:8080/api/v1";
+  "https://shekhai-server.onrender.com/api/v1";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({

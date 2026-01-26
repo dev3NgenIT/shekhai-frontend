@@ -9,7 +9,7 @@ import SkillCTA from "@/components/mentor-room/skillCTA/skillCTA";
 import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 import { useEffect, useState } from 'react';
 
-const API_BASE_URL = 'http://localhost:8080/api/v1/mentor-room';
+const API_BASE_URL = 'https://shekhai-server.onrender.com/api/v1/mentor-room';
 
 export default function Page() {
   const [mentorData, setMentorData] = useState(null);
@@ -54,8 +54,8 @@ export default function Page() {
       setError(null);
 
       try {
-        console.log("Fetching webinars from:", `http://localhost:8080/api/v1/webinars`);
-        const response = await fetch(`http://localhost:8080/api/v1/webinars?status=published`);
+        console.log("Fetching webinars from:", `https://shekhai-server.onrender.com/api/v1/webinars`);
+        const response = await fetch(`https://shekhai-server.onrender.com/api/v1/webinars?status=published`);
 
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);

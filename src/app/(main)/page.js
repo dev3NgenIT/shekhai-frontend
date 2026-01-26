@@ -54,7 +54,7 @@ export const metadata = {
 
 async function getHomepageData() {
   try {
-    const response = await axios.get("http://localhost:8080/api/v1/homepage");
+    const response = await axios.get("https://shekhai-server.onrender.com/api/v1/homepage");
     return response.data;
   } catch (error) {
     console.error("Error fetching homepage data:", error);
