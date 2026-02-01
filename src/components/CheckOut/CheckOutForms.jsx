@@ -305,13 +305,88 @@ const CheckOutForms = () => {
     setTimeout(() => {
       clearInterval(pollInterval);
       if (paymentStatus === "Redirected") {
-        toast.info("Still waiting for payment. Please check your bKash app.");
+        toast("Still waiting for payment. Please check your bKash app.");
       }
     }, 300000);
   };
 
-  // Complete enrollment
-  // Complete enrollment with fallback
+  // Function to create user account automatically
+  // Function to create user account automatically
+  const createUserAccount = async (userData) => {
+    try {
+      console.log("Creating user account...", userData);
+
+      // Generate password from email (first character uppercase + email)
+      const email = userData.email;
+      const password = email.charAt(0).toUpperCase() + email.slice(1);
+
+      const userPayload = {
+        name: userData.fullname,
+        email: userData.email,
+        password: password, // First character uppercase + email
+        role: "student" // Fixed role as student
+      };
+
+      console.log("User creation payload:", userPayload);
+
+      // Create user account
+      const response = await axios.post(
+        "https://shekhai-server.onrender.com/api/v1/auth/signup",
+        userPayload,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+
+      // Better response handling
+      if (response.data && response.data.success) {
+        console.log("User account created successfully:", response.data);
+        return {
+          success: true,
+          data: response.data,
+          message: "User account created successfully"
+        };
+      } else {
+        const errorMessage = response.data?.message ||
+          response.data?.error ||
+          response.data?.statusMessage ||
+          "User creation failed";
+        console.error("User creation failed:", response.data || "No response data");
+        return {
+          success: false,
+          message: errorMessage
+        };
+      }
+
+    } catch (error) {
+      console.error("Error creating user account:", error.response?.data || error);
+
+      // Handle specific error cases
+      if (error.response?.status === 409) {
+        // User already exists - this is okay, we can proceed with enrollment
+        console.log("User already exists, proceeding with enrollment...");
+        return {
+          success: true,
+          message: "User already exists"
+        };
+      }
+
+      const errorMessage = error.response?.data?.message ||
+        error.response?.data?.error ||
+        error.message ||
+        "Failed to create user account";
+
+      return {
+        success: false,
+        message: errorMessage
+      };
+    }
+  };
+
+  // Complete enrollment with fallback and automatic user creation
+  // Complete enrollment with fallback and automatic user creation
   const completeEnrollment = async (paymentData) => {
     try {
       const enrollmentData = {
@@ -333,7 +408,33 @@ const CheckOutForms = () => {
 
       console.log("Saving enrollment:", enrollmentData);
 
-      // Try to save to backend
+      // Step 1: Create user account automatically
+      const userCreationResult = await createUserAccount(formData);
+
+      if (userCreationResult.success) {
+        console.log("User account step completed:", userCreationResult.message);
+
+        // Show user account info to student
+        const password = formData.email.charAt(0).toUpperCase() + formData.email.slice(1);
+        toast.success(
+          <div>
+            User account created!<br />
+            Email: {formData.email}<br />
+            Password: {password}<br />
+            Role: Student
+          </div>,
+          { duration: 6000 }
+        );
+      } else {
+        console.warn("User creation warning:", userCreationResult.message);
+        // Continue with enrollment even if user creation has issues
+        toast(`Note: ${userCreationResult.message}. Enrollment will proceed.`, {
+          duration: 4000,
+          icon: 'ℹ️'
+        });
+      }
+
+      // Step 2: Try to save enrollment to backend
       try {
         const response = await axios.post(
           "https://shekhai-server.onrender.com/api/v1/enrollments",
@@ -414,12 +515,21 @@ const CheckOutForms = () => {
     Paid At: ${new Date(enrollmentData.paymentInfo.paidAt).toLocaleString()}
     
     ------------------------------------
+    USER ACCOUNT INFORMATION
+    ------------------------------------
+    Account Created: Yes
+    Login Email: ${enrollmentData.studentInfo.email}
+    Password: ${enrollmentData.studentInfo.email.charAt(0).toUpperCase() + enrollmentData.studentInfo.email.slice(1)}
+    Role: Student
+    
+    ------------------------------------
     IMPORTANT NOTES
     ------------------------------------
     1. Keep this receipt for future reference
     2. Use Enrollment ID for support queries
     3. Access your course at: https://yourwebsite.com/courses/${enrollmentData.courseId}
-    4. Contact support: support@yourwebsite.com
+    4. Login with the credentials above
+    5. Contact support: support@yourwebsite.com
     
     ====================================
             THANK YOU!
@@ -452,7 +562,7 @@ const CheckOutForms = () => {
     console.log('Email notification would be sent:', {
       to: enrollmentData.studentInfo.email,
       subject: `Enrollment Confirmation - ${enrollmentData.courseTitle}`,
-      body: `Dear ${enrollmentData.studentInfo.fullname},\n\nYou have successfully enrolled in "${enrollmentData.courseTitle}".\n\nEnrollment ID: ${enrollmentData.enrollmentId}\nAmount Paid: ${enrollmentData.coursePrice} BDT\n\nThank you for your purchase!`
+      body: `Dear ${enrollmentData.studentInfo.fullname},\n\nYou have successfully enrolled in "${enrollmentData.courseTitle}".\n\nEnrollment ID: ${enrollmentData.enrollmentId}\nAmount Paid: ${enrollmentData.coursePrice} BDT\n\nLogin Credentials:\nEmail: ${enrollmentData.studentInfo.email}\nPassword: ${enrollmentData.studentInfo.email.charAt(0).toUpperCase() + enrollmentData.studentInfo.email.slice(1)}\nRole: Student\n\nThank you for your purchase!`
     });
   };
 
@@ -662,6 +772,10 @@ const CheckOutForms = () => {
                       <CheckCircle className="h-4 w-4 text-green-500" />
                       <span>30-day money-back guarantee</span>
                     </div>
+                    <div className="flex items-center gap-2">
+                      <CheckCircle className="h-4 w-4 text-green-500" />
+                      <span>Automatic student account creation</span>
+                    </div>
                   </div>
                 </>
               )}
@@ -730,6 +844,9 @@ const CheckOutForms = () => {
                           onChange={handleInputChange}
                           className="h-12"
                         />
+                        <p className="mt-2 text-sm text-gray-500">
+                          This will be used to create your student account
+                        </p>
                       </div>
 
                       <div>
@@ -747,6 +864,13 @@ const CheckOutForms = () => {
                           This will be used for bKash payment verification
                         </p>
                       </div>
+                    </div>
+
+                    <div className="rounded-lg bg-blue-50 p-4">
+                      <p className="text-sm text-blue-800">
+                        🔐 <strong>Note:</strong> A student account will be automatically created
+                        using your email. Password will be your email with the first letter capitalized.
+                      </p>
                     </div>
                   </div>
                 </>
@@ -810,7 +934,7 @@ const CheckOutForms = () => {
                     <div className="rounded-lg bg-blue-50 p-4">
                       <p className="text-sm text-blue-800">
                         💡 <strong>Note:</strong> After payment in bKash, close the bKash window
-                        and return to this tab to see confirmation.
+                        and return to this tab to see confirmation. A student account will be created automatically.
                       </p>
                     </div>
                   </div>
@@ -897,6 +1021,10 @@ const CheckOutForms = () => {
                       <span className="text-gray-600">Payment Method</span>
                       <span className="font-medium">bKash {BKASH_CONFIG.IS_SANDBOX && "(Sandbox)"}</span>
                     </div>
+                    <div className="flex justify-between border-b pb-3">
+                      <span className="text-gray-600">Your Student Account</span>
+                      <span className="font-medium">Created ✓</span>
+                    </div>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Payment Status</span>
                       <span className="font-medium text-green-600">Completed</span>
@@ -910,7 +1038,28 @@ const CheckOutForms = () => {
                     >
                       Go to Course
                     </Button>
-                    {/* Add Download Receipt Button */}
+
+                    {/* Account Information Button */}
+                    <div className="rounded-lg bg-blue-50 p-4">
+                      <p className="text-sm font-medium text-blue-800 mb-2">Your Login Credentials:</p>
+                      <div className="text-left space-y-1 text-sm">
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Email:</span>
+                          <code className="rounded bg-blue-100 px-2 py-1">{formData.email}</code>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Password:</span>
+                          <code className="rounded bg-blue-100 px-2 py-1">
+                            {formData.email.charAt(0).toUpperCase() + formData.email.slice(1)}
+                          </code>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-gray-700">Role:</span>
+                          <span className="font-medium">Student</span>
+                        </div>
+                      </div>
+                    </div>
+
                     <Button
                       onClick={() => {
                         const enrollments = JSON.parse(localStorage.getItem('courseEnrollments') || '[]');
