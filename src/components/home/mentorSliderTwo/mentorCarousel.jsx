@@ -1,3 +1,5 @@
+"use client";
+
 import {
   Carousel,
   CarouselContent,
@@ -6,16 +8,51 @@ import {
   CarouselPrevious,
 } from "@/components/ui/carousel";
 import CarouselCard from "./carouselCard";
+import { useEffect, useState, useCallback } from "react";
 
 export default function MentorCarousel({ data }) {
+  const [api, setApi] = useState(null);
+  const [current, setCurrent] = useState(0);
+  const [count, setCount] = useState(0);
+
   // Handle both formats: direct array or object with experts property
   let experts = [];
-  
+
   if (Array.isArray(data)) {
     experts = data;
   } else if (data?.experts && Array.isArray(data.experts)) {
     experts = data.experts;
   }
+
+  // Set up autoplay when carousel is ready
+  useEffect(() => {
+    if (!api) {
+      return;
+    }
+
+    setCount(api.scrollSnapList().length);
+    setCurrent(api.selectedScrollSnap() + 1);
+
+    api.on("select", () => {
+      setCurrent(api.selectedScrollSnap() + 1);
+    });
+  }, [api]);
+
+  // Autoplay functionality
+  useEffect(() => {
+    if (!api || experts.length === 0) return;
+
+    const autoplayInterval = setInterval(() => {
+      if (current === count) {
+        // If at last slide, go to first
+        api.scrollTo(0);
+      } else {
+        api.scrollNext();
+      }
+    }, 3000); // Change slide every 3 seconds
+
+    return () => clearInterval(autoplayInterval);
+  }, [api, current, count, experts.length]);
 
   // Check if experts array is empty
   if (!experts || experts.length === 0) {
@@ -27,19 +64,45 @@ export default function MentorCarousel({ data }) {
   }
 
   return (
-    <Carousel className="mt-[3.75rem]" opts={{ align: "start" }}>
-      <CarouselContent className="ml-8 md:-ml-4">
-        {experts.map((item, index) => (
-          <CarouselItem 
-            key={item._id || item.id || index} 
-            className="basis-full pl-4 md:basis-1/4"
-          >
-            <CarouselCard item={item} />
-          </CarouselItem>
+    <div className="relative">
+      <Carousel
+        setApi={setApi}
+        opts={{
+          align: "start",
+          loop: true, // Enable looping for smoother autoplay
+        }}
+        className="mt-[3.75rem]"
+      >
+        <CarouselContent className="ml-8 md:-ml-4">
+          {experts.map((item, index) => (
+            <CarouselItem
+              key={item._id || item.id || index}
+              className="basis-full pl-4 md:basis-1/4"
+            >
+              <CarouselCard item={item} />
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+
+        {/* Optional navigation buttons */}
+        <CarouselPrevious className="-left-10 hidden md:flex" />
+        <CarouselNext className="-right-10 hidden md:flex" />
+      </Carousel>
+
+      {/* Optional: Pagination dots */}
+      <div className="mt-4 flex justify-center gap-2">
+        {Array.from({ length: count }).map((_, index) => (
+          <button
+            key={index}
+            className={`h-2 w-2 rounded-full transition-all ${current === index + 1
+                ? "w-4 bg-blue-600"
+                : "bg-gray-300 hover:bg-gray-400"
+              }`}
+            onClick={() => api?.scrollTo(index)}
+            aria-label={`Go to slide ${index + 1}`}
+          />
         ))}
-      </CarouselContent>
-      <CarouselPrevious className={"left-1"} />
-      <CarouselNext className={"right-1"} />
-    </Carousel>
+      </div>
+    </div>
   );
 }

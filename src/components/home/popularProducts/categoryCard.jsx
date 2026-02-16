@@ -1,3 +1,4 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { MdArrowOutward } from "react-icons/md";
@@ -22,9 +23,21 @@ export default function CategoryCard({ data: product }) {
   // Extract product/category data
   const name = product?.name || product?.title || "Communication";
   const courseCount = product?.courses_count || product?.courses || product?.total_courses || 0;
-  const image = product?.image || product?.icon || product?.thumbnail || "/category-logo.png";
+
+  // Get image - but validate it's actually an image URL
+  const rawImage = product?.image || product?.icon || product?.thumbnail;
+
+  // Check if it's a valid image URL (ends with image extension or starts with http and contains image indicators)
+  const isValidImageUrl = rawImage &&
+    typeof rawImage === 'string' &&
+    (rawImage.match(/\.(jpeg|jpg|gif|png|svg|webp|ico)$/i) ||
+      rawImage.includes('/images/') ||
+      rawImage.includes('/uploads/'));
+
+  // If it's not a valid image URL, use the fallback
+  const imageSrc = isValidImageUrl ? rawImage : "/category-logo.png";
+
   const backgroundColor = product?.color || "#E7F0F6";
-  // const url = product?.url || product?.slug || `/courses/${product._id || product.id || name.toLowerCase()}`;
   const url = product?.url || product?.slug || `/courses`;
 
   return (
@@ -38,13 +51,17 @@ export default function CategoryCard({ data: product }) {
     >
       <div>
         <div className="relative">
-          {/* Product/Category Image */}
+          {/* Product/Category Image - FIXED VERSION */}
           <Image
-            src={image}
+            src={imageSrc}
             alt={name}
             width={56}
             height={56}
             className="relative isolate size-10 object-contain md:size-[56px]"
+            onError={(e) => {
+              // Fallback if image fails to load
+              e.currentTarget.src = "/category-logo.png";
+            }}
           />
           {/* Background circle */}
           <span
@@ -57,11 +74,6 @@ export default function CategoryCard({ data: product }) {
         <h3 className="mt-3 text-lg font-medium text-gray-900 md:mt-4 md:text-xl">
           {name}
         </h3>
-
-        {/* Course Count */}
-        {/* <p className="mt-0 text-gray-600 md:mt-1 md:text-base">
-          {courseCount} {courseCount === 1 ? 'Course' : 'Courses'}
-        </p> */}
       </div>
 
       {/* Arrow Icon */}

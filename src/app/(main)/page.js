@@ -3,7 +3,7 @@ import MasonrySection from "@/components/home/masonrySection/masonrySection";
 import MentorCTA from "@/components/home/mentorCTA/mentorCTA";
 import MentorSliderOne from "@/components/home/mentorSliderOne/mentorSliderOne";
 import MentorSliderTwo from "@/components/home/mentorSliderTwo/mentorSliderTwo";
-import OnDemandSkillsPromo from "@/components/home/OnDemandSkillsPromo";
+// import OnDemandSkillsPromo from "@/components/home/OnDemandSkillsPromo";
 import PopularProducts from "@/components/home/popularProducts/popularProducts";
 import SkillCTAOne from "@/components/home/skillCTAOne/skillCTAOne";
 import SkillCTATwo from "@/components/home/skillCTATwo/skillCTATwo";
@@ -93,9 +93,9 @@ export default async function Home() {
     <>
       <Hero data={heroData} />
       <MasonrySection data={featuredCategories}/>
-      <OnDemandSkillsPromo data={startLearning}/>
+      {/* <OnDemandSkillsPromo data={startLearning}/> */}
       <MentorSliderOne data={cookingSection}/>
-      <SkillCTAOne data={agricultureSection}/>
+      {/* <SkillCTAOne data={agricultureSection}/> */}
       <MentorSliderTwo data={expertsSection}/>
       <SkillCTATwo data={hobbySection}/>
       <Studybit data={projectSection} />
@@ -104,7 +104,7 @@ export default async function Home() {
       <VideoSection />
       <WhySekhai data={whyChooseUsData} />
       <Stats data={statsData} />
-      <Testimonials data={testimonialsData} />
+      {/* <Testimonials data={testimonialsData} /> */}
     </>
   );
 }

@@ -20,26 +20,7 @@ const WebinarsSection = ({ webinars }) => {
   const router = useRouter();
   const [hoveredCard, setHoveredCard] = useState(null);
 
-  if (!webinars || webinars.length === 0) {
-    return (
-      <section className="flex w-full flex-col items-center justify-center gap-x-[5.125rem] p-5 px-[calc((100vw-1215px)/2)] py-20 text-center">
-        <div className="py-12">
-          <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
-            <LuCalendar className="h-10 w-10 text-gray-400" />
-          </div>
-          <h2 className="text-2xl font-bold text-gray-800">
-            No Webinars Available
-          </h2>
-          <p className="mx-auto mt-2 max-w-md text-gray-600">
-            We're preparing more exciting webinars. Check back soon for upcoming
-            events!
-          </p>
-        </div>
-      </section>
-    );
-  }
-
-  // Format date and time
+  // Format date and time - ADD THESE FUNCTIONS BACK
   const formatDateTime = (dateString) => {
     if (!dateString) return "TBD";
     const date = new Date(dateString);
@@ -72,13 +53,52 @@ const WebinarsSection = ({ webinars }) => {
     return `${hours}h ${minutes}m`;
   };
 
-  const handleViewDetails = (webinarId, webinarTitle) => {
+  // Handle card click (entire card)
+  const handleCardClick = (webinarId, webinarTitle) => {
+    if (!webinarId) {
+      toast.error("Webinar ID not available");
+      return;
+    }
+
+    router.push(`/webinar-room/${webinarId}`);
+  };
+
+  // Handle button click (with toast notification)
+  const handleButtonClick = (e, webinarId, webinarTitle) => {
+    e.stopPropagation(); // Prevent card click
+    if (!webinarId) {
+      toast.error("Webinar ID not available");
+      return;
+    }
+
     toast.success(`Viewing details for "${webinarTitle}"`, {
       icon: "📖",
       duration: 2000,
     });
-    router.push(`/webinar-room/${webinarId}`);
+
+    setTimeout(() => {
+      router.push(`/webinar-room/${webinarId}`);
+    }, 100);
   };
+
+  if (!webinars || webinars.length === 0) {
+    return (
+      <section className="flex w-full flex-col items-center justify-center gap-x-[5.125rem] p-5 px-[calc((100vw-1215px)/2)] py-20 text-center">
+        <div className="py-12">
+          <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-gray-100">
+            <LuCalendar className="h-10 w-10 text-gray-400" />
+          </div>
+          <h2 className="text-2xl font-bold text-gray-800">
+            No Webinars Available
+          </h2>
+          <p className="mx-auto mt-2 max-w-md text-gray-600">
+            We're preparing more exciting webinars. Check back soon for upcoming
+            events!
+          </p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="w-full bg-gradient-to-b from-gray-50 to-white p-5 py-20">
@@ -107,9 +127,10 @@ const WebinarsSection = ({ webinars }) => {
           {webinars.map((webinar, index) => (
             <div
               key={webinar._id}
-              className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:shadow-2xl"
+              className="group relative overflow-hidden rounded-2xl bg-white shadow-lg transition-all duration-500 hover:shadow-2xl cursor-pointer"
               onMouseEnter={() => setHoveredCard(webinar._id)}
               onMouseLeave={() => setHoveredCard(null)}
+              onClick={() => handleCardClick(webinar._id, webinar.title)}
               style={{
                 transform:
                   hoveredCard === webinar._id
@@ -155,9 +176,10 @@ const WebinarsSection = ({ webinars }) => {
                   <div className="-translate-y-4 transform transition-transform duration-300 group-hover:translate-y-0">
                     <Button
                       className="bg-white font-semibold text-gray-900 hover:bg-gray-100"
-                      onClick={() =>
-                        handleViewDetails(webinar._id, webinar.title)
-                      }
+                      onClick={(e) => {
+                        e.stopPropagation(); // Prevent card click
+                        handleButtonClick(e, webinar._id, webinar.title);
+                      }}
                     >
                       Quick View
                       <LuArrowRight className="ml-2 h-4 w-4" />
@@ -274,14 +296,16 @@ const WebinarsSection = ({ webinars }) => {
 
                   {/* Action Button */}
                   <Button
-                    className="mt-4 w-full bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md transition-all duration-300 group-hover:shadow-lg hover:from-blue-700 hover:to-purple-700"
-                    onClick={() =>
-                      handleViewDetails(webinar._id, webinar.title)
-                    }
+                    className="mt-4 w-full cursor-pointer bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-md transition-all duration-300 hover:from-blue-700 hover:to-purple-700 hover:shadow-lg"
+                    onClick={(e) => {
+                      e.stopPropagation(); // Prevent card click
+                      handleButtonClick(e, webinar._id, webinar.title);
+                    }}
+                    type="button"
                   >
                     <span className="flex items-center justify-center gap-2">
                       View Details
-                      <LuArrowRight className="h-4 w-4 transition-transform duration-300 group-hover:translate-x-1" />
+                      <LuArrowRight className="h-4 w-4 transition-transform duration-300 hover:translate-x-1" />
                     </span>
                   </Button>
 
@@ -320,9 +344,9 @@ const WebinarsSection = ({ webinars }) => {
               </div>
 
               {/* Ribbon for Upcoming Soon */}
-              {new Date(webinar.startTime) > new Date() &&
+              {webinar.startTime && new Date(webinar.startTime) > new Date() &&
                 new Date(webinar.startTime) <
-                  new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) && (
+                new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) && (
                   <div className="absolute top-6 -right-10 w-40 rotate-45 bg-gradient-to-r from-pink-500 to-rose-600 py-1 text-center text-xs font-semibold text-white shadow-lg">
                     Starting Soon
                   </div>
@@ -330,27 +354,6 @@ const WebinarsSection = ({ webinars }) => {
             </div>
           ))}
         </div>
-
-        {/* CTA Section */}
-        {/* <div className="mt-16 text-center">
-          <div className="inline-block rounded-full bg-gradient-to-r from-blue-50 to-purple-50 p-1">
-            <Button
-              variant="outline"
-              className="rounded-full border-2 border-dashed border-blue-200 bg-white px-8 py-6 text-lg font-semibold hover:bg-blue-50"
-              onClick={() => router.push('/webinar-room')}
-            >
-              <LuCalendar className="mr-2 h-5 w-5" />
-              View All Webinars
-              <LuArrowRight className="ml-2 h-5 w-5" />
-            </Button>
-          </div>
-          <p className="mt-4 text-sm text-gray-600">
-            Can't find what you're looking for?{' '}
-            <button className="font-semibold text-blue-600 hover:text-blue-700">
-              Request a custom webinar
-            </button>
-          </p>
-        </div> */}
       </div>
     </section>
   );

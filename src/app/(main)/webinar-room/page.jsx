@@ -4,8 +4,8 @@
 import { useEffect, useState } from "react";
 import Banner from "@/components/webinar-room/banner/banner";
 import BannerCTA from "@/components/webinar-room/bannerCTA/bannerCTA";
-import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 import { Toaster, toast } from 'react-hot-toast';
+import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 
 const API_BASE_URL = "https://shekhai-server.onrender.com/api/v1";
 

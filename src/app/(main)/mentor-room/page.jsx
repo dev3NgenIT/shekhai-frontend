@@ -49,7 +49,7 @@ export default function Page() {
       setError(null);
 
       try {
-        
+
         const response = await fetch(`https://shekhai-server.onrender.com/api/v1/webinars?status=published`);
 
         if (!response.ok) {
@@ -104,7 +104,6 @@ export default function Page() {
     <main className="page-body">
       {/* Pass data to Hero component */}
       <Hero mentorData={mentorData} />
-
       {/* You can pass data to other components as well */}
       <CategoryHero mentorData={mentorData} />
       <CategorySlider mentorData={mentorData} />

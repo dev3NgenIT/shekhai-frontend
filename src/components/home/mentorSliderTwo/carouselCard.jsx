@@ -2,29 +2,54 @@ import Image from "next/image";
 import Link from "next/link";
 
 export default function CarouselCard({ item }) {
+  
   // Extract data from your API structure
   const name = item?.name || "Wade Warren";
   const role = item?.role || "Ethical Hacker";
-  const avatar = item?.avatar || "/instructor-carousel-image.png";
   const bio = item?.bio || "Expert in their field";
-  const profileUrl = `/mentors/${item?._id || item?.id}`;
+  
+  // Extract the original image path from the Next.js optimized URL
+  const getOriginalImagePath = (imageUrl) => {
+    if (!imageUrl) return "/instructor-carousel-image.png";
+    
+    try {
+      // If it's a Next.js optimized URL, extract the original path
+      if (imageUrl.includes('/_next/image')) {
+        const urlParams = new URL(imageUrl).searchParams;
+        const originalUrl = urlParams.get('url');
+        return originalUrl || "/instructor-carousel-image.png";
+      }
+      return imageUrl;
+    } catch (error) {
+      console.error("Error parsing image URL:", error);
+      return "/instructor-carousel-image.png";
+    }
+  };
 
+  const avatarSrc = getOriginalImagePath(item?.avatar);
+  const profileUrl = `/mentors/${item?._id || item?.id || ''}`;
 
   return (
-    <Link href="/instructors/wade-warren" className="text-lg text-title-one">
-      <div className="relative flex h-36 w-[18.375rem] items-center justify-between overflow-hidden rounded-lg bg-text-light">
-        <div className="px-4">
-         {name}
-          <p className="text-gray">{role}</p>
+    <Link href={profileUrl} className="block text-lg text-title-one">
+      <div className="relative flex h-[245px] w-[18.375rem] items-center justify-between overflow-hidden rounded-lg bg-text-light hover:shadow-lg transition-shadow duration-300">
+        <div className="px-4 z-10 max-w-[60%]">
+          <p className="font-semibold truncate">{name}</p>
+          <p className="text-sm text-gray-600 truncate">{role}</p>
+          {bio && <p className="text-xs text-gray-500 mt-1 line-clamp-2">{bio}</p>}
         </div>
 
-        <Image
-          src={avatar}
-          alt="instructor image"
-          width={294}
-          height={144}
-          className="absolute top-0 right-0"
-        />
+        <div className="absolute top-0 right-0 w-[505px] h-[250px]">
+          <Image
+            src={avatarSrc}
+            alt={name}
+            width={430}
+            height={260}
+            className="object-cover object-center w-full h-full"
+          />
+        </div>
+        
+        {/* Gradient overlay for better text readability */}
+        <div className="absolute inset-0 bg-gradient-to-r from-white via-white/80 to-transparent pointer-events-none" />
       </div>
     </Link>
   );

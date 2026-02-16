@@ -26,7 +26,7 @@ export default function SeparatedCard({ data: category, isReversed = false }) {
   return (
     <div
       className={cn(
-        "group flex h-[14.875rem] gap-6 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md",
+        "group flex h-[14.875rem] gap-0 overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md",
         isReversed ? "flex-row-reverse" : "flex-row"
       )}
     >
@@ -96,7 +96,7 @@ export default function SeparatedCard({ data: category, isReversed = false }) {
 
         {/* Bottom link bar - Desktop */}
         <Link
-          href={categoryUrl}
+          href="/courses"
           className="absolute bottom-0 left-0 hidden h-[3.75rem] w-full items-center justify-between bg-gradient-to-t from-white/95 to-white/85 px-4 backdrop-blur-sm transition-all duration-300 hover:bg-white/95 group-hover:translate-y-0 md:flex"
         >
           <span className="text-[15px] font-medium text-title-one">
