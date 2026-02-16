@@ -9,7 +9,7 @@ export default function Content({data}) {
         <span className="text-[#234A96]">{data.subtitle}</span>
       </h1>
       <p className="mt-1.5 font-light text-gray md:mt-4 md:text-xl">
-        Master the art of sewing and tailoring with expert guidance.
+        {data.description}
       </p>
 
       <Button className="mt-4">

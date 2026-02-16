@@ -11,7 +11,8 @@ export default function RightContent({ data }) {
         {data.journey_text}
       </h3>
 
-      <Link href="{data.button_link}">
+      {/* <Link href={data.button_link || '/mentor-room'}> */}
+      <Link href={'/mentor-room'}>
         <Button
           variant="secondary"
           className="relative isolate mt-5 overflow-hidden rounded-sm [font-size:_14px] text-base before:absolute before:-top-full before:-left-2/4 before:-z-1 before:h-[200%] before:w-[200%] before:-rotate-45 before:bg-[linear-gradient(0deg,_transparent,_transparent_30%,_#a4a4a4)] before:opacity-0 before:transition-all before:duration-[0.5s] before:ease-[ease] before:content-[''] hover:bg-white hover:before:translate-y-[200%] hover:before:-rotate-45 hover:before:opacity-100"

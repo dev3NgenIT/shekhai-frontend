@@ -1,5 +1,5 @@
-import NormalCard from "./normalCard";
-import SeparatedCard from "./separatedCard";
+import NormalCard from "./NormalCard";
+import SeparatedCard from "./SeparatedCard";
 
 export default function MasonrySection({ data }) {
   

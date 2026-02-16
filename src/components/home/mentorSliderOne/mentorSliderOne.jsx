@@ -1,15 +1,16 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import Carousel from "./carousel";
+import Carousel from "./Carousel";
 
 export default function MentorSliderOne({ data }) {
+  console.log(data, "data asdasd")
   return (
     <section className="mt-16 w-full bg-[#F4FAFF] py-10 md:mt-[6.25rem] md:h-[44.813rem] md:pt-[7.5rem]">
       <div className="container-width relative flex flex-col items-center justify-end md:flex-row">
         <Image
-          alt="chef image"
-          src="/chef.png"
+          alt={data.image}
+          src={data.image}
           width={529}
           height={581}
           className="absolute top-0 -left-[53px] hidden md:block"
@@ -29,7 +30,7 @@ export default function MentorSliderOne({ data }) {
           </div>
 
           {/* <section className="w-[36.75rem]"> */}
-          <Carousel />
+          <Carousel features={data.features} />
           {/* </section> */}
         </section>
       </div>

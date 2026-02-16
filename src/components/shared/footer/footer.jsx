@@ -1,7 +1,7 @@
 import Link from "next/link";
-import CompanyInfo from "./companyInfo";
-import Links from "./links";
-import Socials from "./socials";
+import CompanyInfo from "./CompanyInfo";
+import Links from "./Links";
+import Socials from "./Socials";
 
 const footerLinks = [
   {
@@ -46,7 +46,7 @@ async function getHomepageData() {
     return null;
   }
 }
-export default async function Page() {
+export default async function Footer() {
   const homepageData = await getHomepageData();
   const footerData = homepageData?.data?.footer || {};
   return (

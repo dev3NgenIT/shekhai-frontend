@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import StarRating from "@/components/shared/starRating/StarRating";
+import StarRating from "@/components/shared/StarRating/StarRating";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {

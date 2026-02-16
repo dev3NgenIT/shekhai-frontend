@@ -1,4 +1,4 @@
-import ProjectCard from "@/components/shared/projectCard/ProjectCard";
+import ProjectCard from "@/components/shared/ProjectCard/ProjectCard";
 import { Button } from "@/components/ui/button";
 import { MdArrowOutward } from "react-icons/md";
 import Tags from "./Tags";

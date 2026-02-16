@@ -16,6 +16,7 @@ export default function Content({data}) {
       <Button variant="outline" className="mt-4 bg-transparent text-xs">
         <Link href={`${data.button_link}`}>{data.button_text}</Link>
       </Button>
+      <p className="pt-5">{data.description}</p>
     </div>
   );
 }

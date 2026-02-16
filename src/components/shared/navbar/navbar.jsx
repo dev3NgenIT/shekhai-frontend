@@ -4,8 +4,9 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { FaRegUserCircle } from "react-icons/fa";
-import { CenterLInks } from "./centerLinks";
-import SmNav from "./smNav/smNav";
+import { CenterLInks } from "./CenterLInks";
+import SmNav from "./SmNav/SmNav";
+
 
 export default function Navbar() {
   return (

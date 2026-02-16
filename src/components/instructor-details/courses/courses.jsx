@@ -3,13 +3,13 @@ import SideCardImg from "../../../assets/side-card-img.png";
 import CoursesCarousel from "./coursesCarousel/coursesCarousel";
 import Header from "./header";
 
-export default function Courses() {
+export default function Courses({instructor}) {
   return (
     <section className="container-width mt-16 md:mt-[6.25rem] md:px-0">
-      <Header />
+      <Header instructor={instructor} />
 
       <section className="mt-5 flex flex-wrap items-center justify-center gap-x-5 md:mt-10 md:flex-nowrap">
-        <CoursesCarousel />
+        <CoursesCarousel instructor={instructor}/>
 
         <Image
           src={SideCardImg}

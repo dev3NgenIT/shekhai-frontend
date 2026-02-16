@@ -1,17 +1,17 @@
-import Hero from "@/components/home/hero";
-import MasonrySection from "@/components/home/masonrySection/masonrySection";
-import MentorCTA from "@/components/home/mentorCTA/mentorCTA";
-import MentorSliderOne from "@/components/home/mentorSliderOne/mentorSliderOne";
-import MentorSliderTwo from "@/components/home/mentorSliderTwo/mentorSliderTwo";
-import OnDemandSkillsPromo from "@/components/home/OnDemandSkillsPromo";
-import PopularProducts from "@/components/home/popularProducts/popularProducts";
-import SkillCTAOne from "@/components/home/skillCTAOne/skillCTAOne";
-import SkillCTATwo from "@/components/home/skillCTATwo/skillCTATwo";
-import Stats from "@/components/home/stats/stats";
-import Studybit from "@/components/home/studybit/studybit";
-import Testimonials from "@/components/home/testimonials/testimonials";
-import VideoSection from "@/components/home/videoSection/videoSection";
-import WhySekhai from "@/components/home/whySekhai/whySekhai";
+import Hero from "../../components/home/HomePage/Hero";
+import MasonrySection from "../../components/home/MasonrySection/MasonrySection";
+import MentorCTA from "../../components/home/mentorCTA/MentorCTA";
+import MentorSliderOne from "../../components/home/MentorSliderOne/MentorSliderOne";
+import MentorSliderTwo from "../../components/home/mentorSliderTwo/MentorSliderTwo";
+import OnDemandSkillsPromo from "../../components/home/OnDemandSkillsPromo";
+import PopularProducts from "../../components/home/popularProducts/PopularProducts";
+import SkillCTAOne from "../../components/home/skillCTAOne/SkillCTAOne";
+import SkillCTATwo from "../../components/home/skillCTATwo/SkillCTATwo";
+import Stats from "../../components/home/stats/Stats";
+import Studybit from "../../components/home/studybit/Studybit";
+import Testimonials from "../../components/home/testimonials/Testimonials";
+import VideoSection from "../../components/home/videoSection/videoSection";
+import WhySekhai from "../../components/home/whySekhai/WhySekhai";
 import axios from "axios";
 
 export const metadata = {
@@ -54,21 +54,23 @@ export const metadata = {
 
 async function getHomepageData() {
   try {
-    const response = await axios.get("https://shekhai-server.onrender.com/api/v1/homepage");
+    const response = await axios.get(
+      "https://shekhai-server.onrender.com/api/v1/homepage",
+    );
     return response.data;
   } catch (error) {
     console.error("Error fetching homepage data:", error);
     return {
       success: false,
       message: "Failed to fetch data",
-      data: null
+      data: null,
     };
   }
 }
 
 export default async function Home() {
   const homepageData = await getHomepageData();
-  
+
   // Extract data based on your API response structure
   const heroData = homepageData?.data?.hero || {};
   const featuredCategories = homepageData?.data?.featured_categories || {};
@@ -83,7 +85,7 @@ export default async function Home() {
   const startLearning = homepageData?.data?.start_learning || {};
   const testimonialsData = homepageData?.data?.testimonials || {};
   const popularProductsData = homepageData?.data?.popular_products || {};
-  
+
   // You can pass data to other components similarly
   // For example:
   // const featuredCategories = homepageData?.data?.featured_categories || {};
@@ -92,15 +94,15 @@ export default async function Home() {
   return (
     <>
       <Hero data={heroData} />
-      <MasonrySection data={featuredCategories}/>
-      <OnDemandSkillsPromo data={startLearning}/>
-      <MentorSliderOne data={cookingSection}/>
-      <SkillCTAOne data={agricultureSection}/>
-      <MentorSliderTwo data={expertsSection}/>
-      <SkillCTATwo data={hobbySection}/>
+      <MasonrySection data={featuredCategories} />
+      <OnDemandSkillsPromo data={startLearning} />
+      <MentorSliderOne data={cookingSection} />
+      <SkillCTAOne data={agricultureSection} />
+      <MentorSliderTwo data={expertsSection} />
+      <SkillCTATwo data={hobbySection} />
       <Studybit data={projectSection} />
       <PopularProducts data={popularProductsData} />
-      <MentorCTA data={shareSkillCta}/>
+      <MentorCTA data={shareSkillCta} />
       <VideoSection />
       <WhySekhai data={whyChooseUsData} />
       <Stats data={statsData} />

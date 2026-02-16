@@ -6,8 +6,10 @@ const nextConfig = {
     domains: [
       "localhost",
       "shekhai-server.onrender.com", // your API server domain
+      "shekhai.ngengroup.org", // your API server domain
       "res.cloudinary.com",           // if you use Cloudinary
-      "images.unsplash.com"           // if you use Unsplash
+      "images.unsplash.com" ,
+      "https://shekhai-frontend.vercel.app",
     ],
   },
 

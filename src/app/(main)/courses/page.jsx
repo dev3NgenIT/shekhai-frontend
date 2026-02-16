@@ -1,5 +1,5 @@
 import CategoryTabs from "@/components/courses/CategoryTabs";
-import Spinner from "@/components/shared/spinner/Spinner";
+import Spinner from "@/components/shared/Spinner/Spinner";
 import { Suspense } from "react";
 
 export default function Page() {

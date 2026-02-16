@@ -4,8 +4,8 @@
 import { useEffect, useState } from "react";
 import Banner from "@/components/webinar-room/banner/banner";
 import BannerCTA from "@/components/webinar-room/bannerCTA/bannerCTA";
-import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 import { Toaster, toast } from 'react-hot-toast';
+import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 
 const API_BASE_URL = "https://shekhai-server.onrender.com/api/v1";
 
@@ -22,21 +22,21 @@ export default function WebinarRoomPage() {
 
     try {
       const response = await fetch(`${API_BASE_URL}/webinars?status=published`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
-      
+
       if (result.success) {
         const allWebinars = result.data || [];
         setWebinars(allWebinars);
-        
+
         // Find a featured webinar or use the first one
         const featured = allWebinars.find(webinar => webinar.isFeatured) || allWebinars[0];
         setFeaturedWebinar(featured);
-        
+
       } else {
         throw new Error(result.message || "Failed to load webinars");
       }
@@ -54,13 +54,13 @@ export default function WebinarRoomPage() {
   const fetchFeaturedWebinars = async () => {
     try {
       const response = await fetch(`${API_BASE_URL}/webinars/featured`);
-      
+
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      
+
       const result = await response.json();
-      
+
       if (result.success && result.data && result.data.length > 0) {
         setFeaturedWebinar(result.data[0]);
       }
@@ -96,10 +96,10 @@ export default function WebinarRoomPage() {
       {featuredWebinar && (
         <Banner webinar={featuredWebinar} />
       )}
-      
+
       <WebinarsSection webinars={webinars} />
       <BannerCTA />
-      
+
       <Toaster position="top-right" />
     </main>
   );

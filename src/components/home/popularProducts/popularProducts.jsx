@@ -1,5 +1,5 @@
 import CategoryCard from "./categoryCard";
-import Header from "./header";
+import Header from "./Header";
 
 export default function PopularProducts({ data }) {  // 
 
