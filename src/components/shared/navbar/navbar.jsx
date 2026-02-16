@@ -8,6 +8,7 @@ import { CenterLInks } from "./CenterLInks";
 import SmNav from "./SmNav/SmNav";
 
 
+
 export default function Navbar() {
   return (
     <nav className="sticky top-0 z-50 flex w-full items-center justify-between bg-white px-3 py-4 md:px-[7.5rem]">

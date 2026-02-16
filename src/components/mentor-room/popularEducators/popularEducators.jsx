@@ -1,7 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
+"use client";
+
+import { useState, useEffect } from "react";
 import EducatorCard from "./educatorCard";
+import axios from "axios";
 import axios from "axios";
 
 export default function PopularInstructor() {

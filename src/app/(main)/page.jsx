@@ -106,7 +106,7 @@ export default async function Home() {
       <VideoSection />
       <WhySekhai data={whyChooseUsData} />
       <Stats data={statsData} />
-      <Testimonials data={testimonialsData} />
+      {/* <Testimonials data={testimonialsData} /> */}
     </>
   );
 }
