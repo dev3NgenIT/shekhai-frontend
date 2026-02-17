@@ -1,5 +1,5 @@
-import Content from "@/components/Faq/Content";
-import Sidebar from "@/components/Faq/Sidebar";
+import Content from "@/components/faq/Content";
+import Sidebar from "@/components/faq/Sidebar";
 
 export default function Page() {
   return (

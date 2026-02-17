@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import AnimatedInput from "../../Shared/AnimatedInput/animatedInput";
+import AnimatedInput from "../../shared/AnimatedInput/animatedInput";
 
 export default function Hero({ data }) {
   const [query, setQuery] = useState("");

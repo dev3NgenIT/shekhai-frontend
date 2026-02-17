@@ -3,9 +3,9 @@ import { Hanken_Grotesk, Poppins } from "next/font/google";
 import "../globals.css";
 import { Toaster } from 'react-hot-toast';
 
-import NotifyBar from "@/components/Shared/NotifyBar/notifyBar";
-import Navbar from "@/components/Shared/Navbar/Navbar";
-import Footer from "@/components/Shared/Footer/Footer";
+import NotifyBar from "@/components/shared/NotifyBar/notifyBar";
+import Navbar from "@/components/shared/Navbar/Navbar";
+import Footer from "@/components/shared/Footer/Footer";
 
 const poppins = Poppins({
   variable: "--font-poppins",

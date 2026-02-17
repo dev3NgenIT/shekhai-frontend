@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
-import Carousel from "./Carousel";
+import Carousel from "./carousel";
 
 export default function MentorSliderOne({ data }) {
   return (

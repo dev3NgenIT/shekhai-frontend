@@ -8,7 +8,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from "@/components/ui/carousel";
-import CarouselCard from "./CarouselCard";
+import CarouselCard from "./carouselCard";
 import axios from "axios";
 
 export default function Carousel({ features }) {
