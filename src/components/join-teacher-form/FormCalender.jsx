@@ -110,7 +110,7 @@ const CollapsibleContent = ({ children, className = "" }) => (
   <div className={className}>{children}</div>
 );
 
-export default function Component() {
+export default function FormCalender() {
   const today = new Date();
   const [month, setMonth] = useState(today);
   const [date, setDate] = useState(undefined);

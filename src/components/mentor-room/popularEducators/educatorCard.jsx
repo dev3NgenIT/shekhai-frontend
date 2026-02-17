@@ -54,8 +54,6 @@ export default function EducatorCard({ instructor }) {
 
   const bgColor = getColorFromName(name);
 
-  console.log(instructor, "instructor");
-
   return (
     <Link
       href={`/instructors/${_id}`}

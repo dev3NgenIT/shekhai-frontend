@@ -1,7 +1,6 @@
 import Educator from "./educator";
 
 export default function Educators({ instructors }) {
-  console.log(instructors, "instructors in Educators component");
   
   if (!instructors || instructors.length === 0) {
     return (

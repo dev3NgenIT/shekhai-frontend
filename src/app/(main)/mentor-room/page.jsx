@@ -1,9 +1,10 @@
 "use client"
+import Hero from "@/components/Home/HomePage/Hero";
 import BookEducator from "@/components/Mentor-room/bookEducator/bookEducator";
+
 import CategoryHero from "@/components/Mentor-room/categoryHero/categoryHero";
 import CategorySlider from "@/components/Mentor-room/categorySlider/categorySlider";
 import GroupSession from "@/components/Mentor-room/groupSession/groupSession";
-import Hero from "@/components/Mentor-room/hero/hero";
 import PopularInstructor from "@/components/Mentor-room/popularEducators/popularEducators";
 import SkillCTA from "@/components/Mentor-room/skillCTA/skillCTA";
 import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
@@ -31,10 +32,8 @@ export default function Page() {
 
         if (result.success && result.data) {
           setMentorData(result.data);
-          console.log('Data loaded successfully:', result.data);
         } else {
           setError('No data found');
-          console.log('No data found or success is false');
         }
 
       } catch (error) {

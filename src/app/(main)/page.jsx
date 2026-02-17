@@ -9,7 +9,6 @@ import SkillCTAOne from "@/components/Home/SkillCTAOne/SkillCTAOne";
 import SkillCTATwo from "@/components/Home/SkillCTATwo/skillCTATwo";
 import Stats from "@/components/Home/Stats/stats";
 import Studybit from "@/components/Home/Studybit/studybit";
-import Testimonials from "@/components/Home/Testimonials/testimonials";
 import VideoSection from "@/components/Home/VideoSection/videoSection";
 import WhySekhai from "@/components/Home/WhySekhai/whySekhai";
 import axios from "axios";

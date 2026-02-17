@@ -1,12 +1,11 @@
 "use client";
-import Banner from "@/components/Instructor-details/banner/banner";
-import Courses from "@/components/Instructor-details/courses/courses";
-import Reviews from "@/components/Instructor-details/reviews/reviews";
-import Webinars from "@/components/Instructor-details/webinars/webinars";
+
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import Link from "next/link";
+import Webinars from "@/components/Instructor-details/webinars/webinars";
+import Courses from "@/components/Instructor-details/courses/courses";
+import Banner from "@/components/Instructor-details/banner/banner";
 
 export default function InstructorPage() {
   const router = useRouter();
@@ -19,9 +18,6 @@ export default function InstructorPage() {
 
   // Get the instructor ID/slug from params
   const instructorSlug = params?.slug;
-
-  console.log("Params object:", params);
-  console.log("Instructor slug:", instructorSlug);
 
   // Function to fetch all instructors
   const fetchAllInstructors = async () => {
@@ -60,7 +56,6 @@ export default function InstructorPage() {
         setLoading(true);
         setError(null);
 
-        console.log("Fetching instructor with ID:", instructorSlug);
 
         const response = await axios.get(
           `https://shekhai-server.onrender.com/api/v1/users/instructors/public/${instructorSlug}`,
@@ -73,7 +68,6 @@ export default function InstructorPage() {
           }
         );
 
-        console.log("API Response:", response.data);
 
         if (response.data.success) {
           setInstructor(response.data.instructor);

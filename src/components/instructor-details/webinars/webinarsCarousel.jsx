@@ -20,9 +20,6 @@ export default function WebinarsCarousel({ instructor }) {
   // Get instructor name for filtering (since no ID in webinar data)
   const instructorName = instructor?.name;
 
-  console.log("WebinarsCarousel instructor:", instructor);
-  console.log("Filtering by instructor name:", instructorName);
-
   useEffect(() => {
     const fetchWebinars = async () => {
       if (!instructorName) {
@@ -37,7 +34,6 @@ export default function WebinarsCarousel({ instructor }) {
           "https://shekhai-server.onrender.com/api/v1/webinars?status=published"
         );
 
-        console.log("All webinars response:", response.data);
 
         if (response.data.success && response.data.data) {
           // Filter webinars by instructor name (case-insensitive)

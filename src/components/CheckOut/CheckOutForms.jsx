@@ -102,13 +102,11 @@ const CheckOutForms = () => {
   // Get bKash Access Token via Proxy
   const getBkashAccessToken = async () => {
     try {
-      console.log("Getting bKash access token via proxy...");
 
       const response = await axios.post('/api/bkash', {
         action: 'getToken'
       });
 
-      console.log("Token response:", response.data);
 
       if (response.data && response.data.id_token) {
         setIdToken(response.data.id_token);
@@ -151,7 +149,6 @@ const CheckOutForms = () => {
         merchantInvoiceNumber: invoiceNumber
       };
 
-      console.log("Creating payment...");
 
       const response = await axios.post('/api/bkash', {
         action: 'createPayment',
@@ -161,7 +158,6 @@ const CheckOutForms = () => {
         }
       });
 
-      console.log("Payment creation response:", response.data);
 
       if (response.data && response.data.bkashURL) {
         setPaymentId(response.data.paymentID);
@@ -225,7 +221,6 @@ const CheckOutForms = () => {
         }
       });
 
-      console.log("Payment verification:", response.data);
 
       if (response.data && response.data.transactionStatus === "Completed") {
         // Payment successful
@@ -314,7 +309,6 @@ const CheckOutForms = () => {
   // Function to create user account automatically
   const createUserAccount = async (userData) => {
     try {
-      console.log("Creating user account...", userData);
 
       // Generate password from email (first character uppercase + email)
       const email = userData.email;
@@ -327,7 +321,6 @@ const CheckOutForms = () => {
         role: "student" // Fixed role as student
       };
 
-      console.log("User creation payload:", userPayload);
 
       // Create user account
       const response = await axios.post(
@@ -342,7 +335,6 @@ const CheckOutForms = () => {
 
       // Better response handling
       if (response.data && response.data.success) {
-        console.log("User account created successfully:", response.data);
         return {
           success: true,
           data: response.data,
@@ -365,8 +357,7 @@ const CheckOutForms = () => {
 
       // Handle specific error cases
       if (error.response?.status === 409) {
-        // User already exists - this is okay, we can proceed with enrollment
-        console.log("User already exists, proceeding with enrollment...");
+        // User already exists - this is okay, we can proceed with enrollme
         return {
           success: true,
           message: "User already exists"
@@ -406,13 +397,11 @@ const CheckOutForms = () => {
         enrollmentId: `ENR-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`
       };
 
-      console.log("Saving enrollment:", enrollmentData);
 
       // Step 1: Create user account automatically
       const userCreationResult = await createUserAccount(formData);
 
       if (userCreationResult.success) {
-        console.log("User account step completed:", userCreationResult.message);
 
         // Show user account info to student
         const password = formData.email.charAt(0).toUpperCase() + formData.email.slice(1);
@@ -448,7 +437,6 @@ const CheckOutForms = () => {
         }
 
       } catch (backendError) {
-        console.log("Backend save failed, using fallback:", backendError.message);
 
         // Fallback 1: Save to localStorage
         const enrollments = JSON.parse(localStorage.getItem('courseEnrollments') || '[]');

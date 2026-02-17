@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import StarRating from "@/components/Shared/StarRating/StarRating";
+// import StarRating from "@/components/Shared/StarRating/StarRating";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import {
@@ -21,6 +21,7 @@ import {
   ChevronRight,
 } from "lucide-react";
 import { toast, Toaster } from "react-hot-toast";
+import StarRating from "@/components/Shared/StarRating/StarRating";
 
 export default function CourseDetails() {
   const params = useParams();
@@ -181,9 +182,6 @@ export default function CourseDetails() {
   const hasImages = images.length > 0;
   const originalPrice = course.price * 1.2; // Assuming 20% discount if you want to show
   const discountPercentage = calculateDiscount(originalPrice, course.price);
-
-  console.log("Course images:", images);
-  console.log("Raw course data:", course);
 
   return (
     <div className="space-y-6 lg:col-span-2">

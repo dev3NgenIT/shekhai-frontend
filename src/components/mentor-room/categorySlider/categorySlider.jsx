@@ -2,7 +2,6 @@ import Slider from "./slider";
 
 export default function CategorySlider({ mentorData }) {
   const SectionTwoData = mentorData?.section_two;
-  console.log("Section Two Data asd:", SectionTwoData);
   
   // Safely access icons with optional chaining and provide fallback
   const icons = SectionTwoData?.icons || [];

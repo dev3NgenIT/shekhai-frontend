@@ -46,13 +46,9 @@ const ProjectCard = ({ course, categoryName }) => {
   const errorCountRef = useRef(0);
   const maxRetries = 2;
 
-  console.log("Course banner image:", course.bannerImage);
-  console.log("Image src:", imgSrc);
-
   // Handle image error
   const handleImageError = () => {
     errorCountRef.current += 1;
-    console.log(`Image error attempt ${errorCountRef.current}`);
 
     if (errorCountRef.current <= maxRetries) {
       // Use fallback image
@@ -62,7 +58,6 @@ const ProjectCard = ({ course, categoryName }) => {
 
   const handleImageLoad = () => {
     setImageLoaded(true);
-    console.log("Image loaded successfully");
   };
 
   const handleEnroll = (e) => {

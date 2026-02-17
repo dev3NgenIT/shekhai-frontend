@@ -8,7 +8,6 @@ import Content from "./content";
 import { useState } from "react";
 
 export default function Studybit({ data }) {
-  console.log(data, "Studybit component data");
   const [mainImgError, setMainImgError] = useState(false);
   const [starImgError, setStarImgError] = useState(false);
   

@@ -16,8 +16,6 @@ export default function Carousel({ features }) {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  console.log(features, "features");
-
   // Fetch courses from API
   useEffect(() => {
     const fetchCourses = async () => {
@@ -35,7 +33,6 @@ export default function Carousel({ features }) {
         }
         setError(null);
       } catch (err) {
-        console.error("Error fetching courses:", err);
         setError("Failed to load courses");
       } finally {
         setLoading(false);

@@ -4,7 +4,6 @@ import Link from "next/link";
 import Carousel from "./Carousel";
 
 export default function MentorSliderOne({ data }) {
-  console.log(data, "data asdasd")
   return (
     <section className="mt-16 w-full bg-[#F4FAFF] py-10 md:mt-[6.25rem] md:h-[44.813rem] md:pt-[7.5rem]">
       <div className="container-width relative flex flex-col items-center justify-end md:flex-row">

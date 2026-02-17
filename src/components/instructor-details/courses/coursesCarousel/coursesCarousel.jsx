@@ -18,7 +18,6 @@ export default function CoursesCarousel({ instructor }) {
 
   const instructorId = instructor?._id;
 
-  console.log("CoursesCarousel instructor prop:", instructorId);
 
   useEffect(() => {
     const fetchCourses = async () => {

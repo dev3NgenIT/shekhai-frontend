@@ -57,7 +57,6 @@ export default function QuestionForm() {
       const result = await response.json();
       
       if (response.ok && result.success) {
-        console.log('Question posted successfully:', result);
         
         // Reset form after successful submission
         setData({

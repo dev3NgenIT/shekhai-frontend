@@ -28,9 +28,6 @@ export default function CarouselCard({ item }) {
 
   const avatarSrc = getOriginalImagePath(item?.avatar);
   const profileUrl = `/instructors/${item?._id || item?.id || ''}`;
-
-
-  console.log("CarouselCard item:", item);
   return (
     <Link href={profileUrl} className="block text-lg text-title-one">
       <div className="relative flex h-[245px] w-[18.375rem] items-center justify-between overflow-hidden rounded-lg bg-text-light hover:shadow-lg transition-shadow duration-300">

@@ -18,7 +18,6 @@ export default function PopularInstructor() {
           "https://shekhai-server.onrender.com/api/v1/users/instructors/public"
         );
 
-        console.log("API Response:", response.data);
 
         if (response.data && response.data.success) {
           setInstructors(response.data.instructors || []);

@@ -32,8 +32,6 @@ export default function CarouselCard({ course, index }) {
   // Get instructor name
   const instructorName = instructor?.name || "Expert Instructor";
 
-  console.log(course); // For debugging
-
   return (
     <div className="flex h-[6.5rem] w-[18.125rem] items-center gap-x-2 rounded-2xl border border-stroke bg-title-light p-2">
       <Image
@@ -51,11 +49,11 @@ export default function CarouselCard({ course, index }) {
         >
           {title || "Course Title"}
         </Link>
-        
+
         <p className="text-sm text-[#898787] line-clamp-1">
           {instructorName}
         </p>
-        
+
         <div className="flex items-center gap-2 mt-1">
           <Stars count={3} size="sm" />
           <span className="text-xs text-gray-500">{formattedPrice}</span>

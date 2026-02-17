@@ -62,7 +62,6 @@ export default function MentorSliderTwo() {
     title: "Our Expert Mentors",
     description: "Learn from industry professionals"
   };
-console.log("MentorSliderTwo data:", data);
 const instructor = data.instructors[0] || null;
   return (
     <section className="container-width mt-16 md:mt-[6.25rem]">

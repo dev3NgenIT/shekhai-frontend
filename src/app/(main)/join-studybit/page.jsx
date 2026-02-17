@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import ProgressBar from "@/components/Join-studybit/ProgressBar";
-import QuestionSection from "@/components/Join-studybit/QuestionSection";
-import StepIndicator from "@/components/Join-studybit/StepIndicator";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
+import StepIndicator from "@/components/Join-studybit/StepIndicator";
+import QuestionSection from "@/components/Join-studybit/QuestionSection";
+import ProgressBar from "@/components/Join-studybit/ProgressBar";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
 
@@ -235,7 +235,6 @@ export default function Page() {
       }
     };
 
-    console.log('Submitting data:', JSON.stringify(formData, null, 2));
 
     setIsLoading(true);
     
@@ -250,7 +249,6 @@ export default function Page() {
       });
 
       const data = await response.json();
-      console.log('Response:', data);
 
       if (!response.ok) {
         if (data.errors) {

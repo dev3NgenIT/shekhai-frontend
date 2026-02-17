@@ -129,8 +129,6 @@ export default function MentorProfile({ course }) {
   // Bio from API
   const bio = detailedInstructor.bio || "No bio available";
 
-  console.log("Instructor Details:", detailedInstructor);
-
   return (
     <Card className="gap-0 rounded-sm border-0 p-6 shadow-none">
       <h3 className="mb-6 text-xl font-semibold text-base">About Instructor</h3>

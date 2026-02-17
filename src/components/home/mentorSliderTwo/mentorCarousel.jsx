@@ -11,7 +11,6 @@ import CarouselCard from "./carouselCard";
 import { useEffect, useState, useCallback } from "react";
 
 export default function MentorCarousel({ data }) {
-  console.log("data data:", data);
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
@@ -30,7 +29,6 @@ export default function MentorCarousel({ data }) {
     experts = data.experts;
   }
 
-  console.log("Processed experts:", experts); // Debug log
 
   // Set up autoplay when carousel is ready
   useEffect(() => {
