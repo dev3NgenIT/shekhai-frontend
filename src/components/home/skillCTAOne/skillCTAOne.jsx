@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Content from "./Content";
+import Content from "./content";
 
 export default function SkillCTAOne({ data }) {
   // Extract the original image path from the Next.js optimized URL

@@ -3,9 +3,9 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import axios from "axios";
-import Webinars from "@/components/Instructor-details/webinars/webinars";
-import Courses from "@/components/Instructor-details/courses/courses";
-import Banner from "@/components/Instructor-details/banner/banner";
+import Webinars from "@/components/instructor-details/webinars/webinars";
+import Courses from "@/components/instructor-details/courses/courses";
+import Banner from "@/components/instructor-details/banner/banner";
 
 export default function InstructorPage() {
   const router = useRouter();

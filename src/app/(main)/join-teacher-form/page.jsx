@@ -1,5 +1,5 @@
 // import FormCalender from "@/components/Join-teacher-form/formCalender";
-import FormCalender from "@/components/Join-teacher-form/FormCalender";
+import FormCalender from "@/components/join-teacher-form/FormCalender";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Checkbox } from "@/components/ui/checkbox";

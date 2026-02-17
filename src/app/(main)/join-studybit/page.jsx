@@ -5,9 +5,9 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { toast } from "react-hot-toast";
 import Link from "next/link";
-import StepIndicator from "@/components/Join-studybit/StepIndicator";
-import QuestionSection from "@/components/Join-studybit/QuestionSection";
-import ProgressBar from "@/components/Join-studybit/ProgressBar";
+import StepIndicator from "@/components/join-studybit/StepIndicator";
+import QuestionSection from "@/components/join-studybit/QuestionSection";
+import ProgressBar from "@/components/join-studybit/ProgressBar";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8080/api/v1";
 
