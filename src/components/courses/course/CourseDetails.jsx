@@ -10,8 +10,6 @@ import {
   Carousel,
   CarouselContent,
   CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
 } from "@/components/ui/carousel";
 import {
   Clock,
@@ -49,7 +47,6 @@ export default function CourseDetails() {
           `https://shekhai-server.onrender.com/api/v1/courses/${courseId}`,
         );
 
-
         if (response.data.success) {
           const courseData = response.data.course || response.data.data;
           setCourse(courseData);
@@ -74,6 +71,23 @@ export default function CourseDetails() {
     fetchCourse();
   }, [courseId, router]);
 
+  // Helper function to extract image source from various formats
+  const getImageSrc = (image) => {
+    if (!image) return null;
+    
+    // If it's an object with data property (base64)
+    if (typeof image === 'object' && image.data) {
+      return image.data;
+    }
+    
+    // If it's a direct URL string
+    if (typeof image === 'string') {
+      return image;
+    }
+    
+    return null;
+  };
+
   // Helper function to format price
   const formatPrice = (price) => {
     if (!price && price !== 0) return "Free";
@@ -96,16 +110,19 @@ export default function CourseDetails() {
     const images = [];
     
     // Add banner image first if exists
-    if (course?.bannerUrl) {
-      images.push(course.bannerUrl);
+    if (course?.bannerImage) {
+      const bannerSrc = getImageSrc(course.bannerImage);
+      if (bannerSrc) {
+        images.push(bannerSrc);
+      }
     }
     
     // Add thumbnails
     if (course?.thumbnails && course.thumbnails.length > 0) {
-      // Filter out duplicate images (if banner is same as first thumbnail)
       course.thumbnails.forEach(thumbnail => {
-        if (!images.includes(thumbnail)) {
-          images.push(thumbnail);
+        const thumbnailSrc = getImageSrc(thumbnail);
+        if (thumbnailSrc && !images.includes(thumbnailSrc)) {
+          images.push(thumbnailSrc);
         }
       });
     }
@@ -116,13 +133,17 @@ export default function CourseDetails() {
   // Handle next image
   const nextImage = () => {
     const images = getAllImages();
-    setActiveImageIndex((prev) => (prev + 1) % images.length);
+    if (images.length > 0) {
+      setActiveImageIndex((prev) => (prev + 1) % images.length);
+    }
   };
 
   // Handle previous image
   const prevImage = () => {
     const images = getAllImages();
-    setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    if (images.length > 0) {
+      setActiveImageIndex((prev) => (prev - 1 + images.length) % images.length);
+    }
   };
 
   // Loading state
@@ -161,73 +182,95 @@ export default function CourseDetails() {
   const originalPrice = course.price * 1.2; // Assuming 20% discount if you want to show
   const discountPercentage = calculateDiscount(originalPrice, course.price);
 
+  console.log("Course images:", images);
+  console.log("Raw course data:", course);
+
   return (
     <div className="space-y-6 lg:col-span-2">
       <Toaster position="top-right" />
 
       {/* Banner Image Slider Section */}
-      {hasImages && (
+      {hasImages ? (
         <Card className="m-0 gap-0 border-0 bg-transparent p-0 shadow-none">
           <div className="relative aspect-video bg-black">
             {/* Main Image Display */}
             <img
               src={images[activeImageIndex]}
               alt={`Course image ${activeImageIndex + 1}`}
-              className="h-full w-full object-cover"
+              className="h-full w-full object-contain"
+              onError={(e) => {
+                console.error("Image failed to load:", images[activeImageIndex]);
+                e.target.src = "/placeholder-image.png"; // Add a placeholder image
+              }}
             />
             
             {/* Navigation Buttons */}
-            <button
-              onClick={prevImage}
-              className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
-            >
-              <ChevronLeft className="h-6 w-6" />
-            </button>
-            <button
-              onClick={nextImage}
-              className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
-            >
-              <ChevronRight className="h-6 w-6" />
-            </button>
+            {images.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
+                >
+                  <ChevronLeft className="h-6 w-6" />
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-4 top-1/2 -translate-y-1/2 rounded-full bg-black/50 p-2 text-white hover:bg-black/70"
+                >
+                  <ChevronRight className="h-6 w-6" />
+                </button>
+              </>
+            )}
             
             {/* Image Counter */}
-            <div className="absolute bottom-4 right-4 rounded-full bg-black/50 px-3 py-1 text-sm text-white">
-              {activeImageIndex + 1} / {images.length}
-            </div>
+            {images.length > 1 && (
+              <div className="absolute bottom-4 right-4 rounded-full bg-black/50 px-3 py-1 text-sm text-white">
+                {activeImageIndex + 1} / {images.length}
+              </div>
+            )}
           </div>
 
           {/* Thumbnails Carousel */}
-          <div className="p-4">
-            <Carousel className="w-full">
-              <CarouselContent className="-ml-2 md:-ml-4">
-                {images.map((src, index) => (
-                  <CarouselItem
-                    key={index}
-                    className="basis-1/4 pl-2 md:pl-4"
-                  >
-                    <div
-                      className={`relative aspect-video cursor-pointer overflow-hidden rounded border-2 transition-all md:rounded-lg ${
-                        activeImageIndex === index
-                          ? "border-blue-500 scale-95"
-                          : "border-transparent hover:border-blue-500 hover:scale-[0.98]"
-                      }`}
-                      onClick={() => setActiveImageIndex(index)}
+          {images.length > 1 && (
+            <div className="p-4">
+              <Carousel className="w-full">
+                <CarouselContent className="-ml-2 md:-ml-4">
+                  {images.map((src, index) => (
+                    <CarouselItem
+                      key={index}
+                      className="basis-1/4 pl-2 md:pl-4"
                     >
-                      <img
-                        src={src}
-                        alt={`Thumbnail ${index + 1}`}
-                        className="h-full w-full object-cover"
-                      />
-                      {activeImageIndex === index && (
-                        <div className="absolute inset-0 bg-blue-500/20"></div>
-                      )}
-                    </div>
-                  </CarouselItem>
-                ))}
-              </CarouselContent>
-              {/* <CarouselPrevious className="-left-8 size-7" /> */}
-              {/* <CarouselNext className="-right-8 size-7" /> */}
-            </Carousel>
+                      <div
+                        className={`relative aspect-video cursor-pointer overflow-hidden rounded border-2 transition-all md:rounded-lg ${
+                          activeImageIndex === index
+                            ? "border-blue-500 scale-95"
+                            : "border-transparent hover:border-blue-500 hover:scale-[0.98]"
+                        }`}
+                        onClick={() => setActiveImageIndex(index)}
+                      >
+                        <img
+                          src={src}
+                          alt={`Thumbnail ${index + 1}`}
+                          className="h-full w-full object-cover"
+                          onError={(e) => {
+                            e.target.src = "/placeholder-thumbnail.png";
+                          }}
+                        />
+                        {activeImageIndex === index && (
+                          <div className="absolute inset-0 bg-blue-500/20"></div>
+                        )}
+                      </div>
+                    </CarouselItem>
+                  ))}
+                </CarouselContent>
+              </Carousel>
+            </div>
+          )}
+        </Card>
+      ) : (
+        <Card className="m-0 gap-0 border-0 bg-transparent p-0 shadow-none">
+          <div className="relative aspect-video bg-gray-200 flex items-center justify-center">
+            <p className="text-gray-500">No images available</p>
           </div>
         </Card>
       )}
@@ -262,7 +305,7 @@ export default function CourseDetails() {
 
               <div className="flex items-center gap-1">
                 <Users className="h-4 w-4" />
-                <span>{course.purchasedBy?.length || 0} enrolled</span>
+                <span>{course.enrolledStudents || 0} enrolled</span>
               </div>
 
               {course.enrollmentDeadline && (
@@ -278,8 +321,8 @@ export default function CourseDetails() {
 
             {/* Rating */}
             <div className="mb-4 flex items-center gap-4">
-              <StarRating rating={4.9} />
-              <span className="text-sm font-medium">4.9</span>
+              <StarRating rating={course.rating || 4.9} />
+              <span className="text-sm font-medium">{course.rating || 4.9}</span>
             </div>
 
             {/* Price */}
@@ -337,50 +380,35 @@ export default function CourseDetails() {
             )}
 
             {/* What You'll Learn */}
-            {course.longDescription && (
+            {course.whatYoullLearn && course.whatYoullLearn.length > 0 && (
               <div className="mt-8">
                 <h3 className="mb-4 text-lg font-semibold">What You'll Learn</h3>
                 <div className="grid grid-cols-1 gap-3 md:grid-cols-2">
-                  {course.longDescription
-                    .split(/[.!?]/)
-                    .filter((sentence) => sentence.trim().length > 10)
-                    .slice(0, 6)
-                    .map((sentence, index) => (
-                      <div key={index} className="flex items-start gap-2">
-                        <div className="mt-1 h-2 w-2 rounded-full bg-base"></div>
-                        <span className="text-gray-600">
-                          {sentence.trim()}.
-                        </span>
-                      </div>
-                    ))}
+                  {course.whatYoullLearn.map((item, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <div className="mt-1 h-2 w-2 rounded-full bg-base"></div>
+                      <span className="text-gray-600">{item}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
             )}
 
             {/* Requirements */}
-            <div className="mt-8">
-              <h3 className="mb-4 text-lg font-semibold">Requirements</h3>
-              <div className="space-y-2">
-                <div className="flex items-start gap-2">
-                  <div className="mt-1 h-2 w-2 rounded-full bg-gray-400"></div>
-                  <span className="text-gray-600">
-                    No prior knowledge required
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="mt-1 h-2 w-2 rounded-full bg-gray-400"></div>
-                  <span className="text-gray-600">
-                    Basic computer skills
-                  </span>
-                </div>
-                <div className="flex items-start gap-2">
-                  <div className="mt-1 h-2 w-2 rounded-full bg-gray-400"></div>
-                  <span className="text-gray-600">
-                    Internet connection
-                  </span>
+            {course.prerequisites && course.prerequisites.length > 0 && (
+              <div className="mt-8">
+                <h3 className="mb-4 text-lg font-semibold">Requirements</h3>
+                <div className="space-y-2">
+                  {course.prerequisites.map((req, index) => (
+                    <div key={index} className="flex items-start gap-2">
+                      <div className="mt-1 h-2 w-2 rounded-full bg-gray-400"></div>
+                      <span className="text-gray-600">{req}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </div>
+            )}
+
             {/* Modules Preview */}
             {course.modules && course.modules.length > 0 && (
               <div className="mt-6">

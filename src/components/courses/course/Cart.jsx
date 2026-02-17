@@ -197,13 +197,13 @@ export default function Cart({ course }) {
           {loading ? "Processing..." : "Enroll Now"}
         </Button>
 
-        <Button
+        {/* <Button
           variant="outline"
           className="w-full py-6 text-lg font-medium border-base text-base hover:bg-base/10"
           onClick={handleAddToCart}
         >
           Add to Cart
-        </Button>
+        </Button> */}
       </div>
 
       <div className="mt-6 space-y-3 text-start text-sm text-gray-500">

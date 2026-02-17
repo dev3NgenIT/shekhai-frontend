@@ -11,18 +11,26 @@ import CarouselCard from "./carouselCard";
 import { useEffect, useState, useCallback } from "react";
 
 export default function MentorCarousel({ data }) {
+  console.log("data data:", data);
   const [api, setApi] = useState(null);
   const [current, setCurrent] = useState(0);
   const [count, setCount] = useState(0);
 
-  // Handle both formats: direct array or object with experts property
+  // Handle different data formats
   let experts = [];
 
   if (Array.isArray(data)) {
+    // If data is directly an array
     experts = data;
+  } else if (data?.instructors && Array.isArray(data.instructors)) {
+    // If data has instructors property (your current structure)
+    experts = data.instructors;
   } else if (data?.experts && Array.isArray(data.experts)) {
+    // If data has experts property (fallback)
     experts = data.experts;
   }
+
+  console.log("Processed experts:", experts); // Debug log
 
   // Set up autoplay when carousel is ready
   useEffect(() => {
@@ -88,21 +96,6 @@ export default function MentorCarousel({ data }) {
         <CarouselPrevious className="-left-10 hidden md:flex" />
         <CarouselNext className="-right-10 hidden md:flex" />
       </Carousel>
-
-      {/* Optional: Pagination dots */}
-      <div className="mt-4 flex justify-center gap-2">
-        {Array.from({ length: count }).map((_, index) => (
-          <button
-            key={index}
-            className={`h-2 w-2 rounded-full transition-all ${current === index + 1
-                ? "w-4 bg-blue-600"
-                : "bg-gray-300 hover:bg-gray-400"
-              }`}
-            onClick={() => api?.scrollTo(index)}
-            aria-label={`Go to slide ${index + 1}`}
-          />
-        ))}
-      </div>
     </div>
   );
 }

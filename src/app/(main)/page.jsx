@@ -98,7 +98,7 @@ export default async function Home() {
       <OnDemandSkillsPromo data={startLearning} />
       <MentorSliderOne data={cookingSection} />
       <SkillCTAOne data={agricultureSection} />
-      <MentorSliderTwo data={expertsSection} />
+      <MentorSliderTwo  />
       <SkillCTATwo data={hobbySection} />
       <Studybit data={projectSection} />
       <PopularProducts data={popularProductsData} />

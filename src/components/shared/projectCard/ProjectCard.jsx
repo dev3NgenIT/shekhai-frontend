@@ -7,11 +7,12 @@ import { Star } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState, useRef } from "react";
+import { toast } from "react-hot-toast"; // Make sure to import toast
 
 const ProjectCard = ({ course, categoryName }) => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  
+
   const formatPrice = (price) => {
     return new Intl.NumberFormat("en-BD", {
       style: "currency",
@@ -22,36 +23,52 @@ const ProjectCard = ({ course, categoryName }) => {
 
   const originalPrice = course.price * 1.2;
 
+  // Handle banner image - check if it's an object with data or a URL string
+  const getBannerSrc = () => {
+    if (!course.bannerImage) return "";
+
+    // If bannerImage is an object with data property (base64)
+    if (typeof course.bannerImage === 'object' && course.bannerImage.data) {
+      return course.bannerImage.data;
+    }
+
+    // If bannerImage is a direct URL string
+    if (typeof course.bannerImage === 'string') {
+      return course.bannerImage;
+    }
+
+    return "";
+  };
+
   // State for image handling
-  const [imgSrc, setImgSrc] = useState(course.bannerUrl || "");
+  const [imgSrc, setImgSrc] = useState(getBannerSrc());
   const [imageLoaded, setImageLoaded] = useState(false);
   const errorCountRef = useRef(0);
   const maxRetries = 2;
 
+  console.log("Course banner image:", course.bannerImage);
+  console.log("Image src:", imgSrc);
+
   // Handle image error
   const handleImageError = () => {
     errorCountRef.current += 1;
+    console.log(`Image error attempt ${errorCountRef.current}`);
 
     if (errorCountRef.current <= maxRetries) {
-      // First fallback
-      if (errorCountRef.current === 1) {
-        setImgSrc("/courses-banner.png");
-      }
-      // Second fallback (if first fallback also fails)
-      else if (errorCountRef.current === 2) {
-        setImgSrc("/courses-banner.png");
-      }
+      // Use fallback image
+      setImgSrc("/courses-banner.png");
     }
   };
 
   const handleImageLoad = () => {
     setImageLoaded(true);
+    console.log("Image loaded successfully");
   };
 
   const handleEnroll = (e) => {
     e.preventDefault(); // Prevent link navigation
     e.stopPropagation(); // Stop event bubbling
-    
+
     if (!course._id) {
       toast.error("Course not found");
       return;
@@ -68,7 +85,7 @@ const ProjectCard = ({ course, categoryName }) => {
           title: course.title,
           price: course.price,
           instructor: course.instructor,
-          bannerUrl: course.bannerUrl,
+          bannerUrl: getBannerSrc(), // Use the processed banner
           category: categoryName,
         }),
       );
@@ -106,11 +123,11 @@ const ProjectCard = ({ course, categoryName }) => {
         <img
           src={imgSrc}
           alt={course.title}
-          className={`h-full w-full rounded-lg object-cover ${imageLoaded ? "opacity-100" : "opacity-0"}`}
+          className={`h-full w-full rounded-lg object-cover transition-opacity duration-300 ${imageLoaded ? "opacity-100" : "opacity-0"
+            }`}
           onError={handleImageError}
           onLoad={handleImageLoad}
           loading="lazy"
-          style={{ transition: "opacity 0.3s ease-in-out" }}
         />
       </>
     );
@@ -127,11 +144,11 @@ const ProjectCard = ({ course, categoryName }) => {
       <CardContent className="p-0">
         <Link href={`/courses/${course._id}`} className="block">
           <div className="flex items-center justify-between pt-1 pb-3">
-            <Badge className="rounded border-none bg-[#103ABA]/10 px-2 py-1 text-[16px] font-normal text-title-one">
+            <Badge className="rounded border-none bg-[#103ABA]/10 px-2 py-1 text-[16px] font-normal text-title-one hover:text-white">
               {categoryName}
             </Badge>
             <span className="text-sm text-[#A9A9A9]">
-              {course.purchasedBy?.length || 0} enrolled
+              {course.enrolledStudents || 0} enrolled
             </span>
           </div>
           <h3 className="mb-2 text-lg font-semibold text-foreground">
@@ -188,7 +205,7 @@ const ProjectCard = ({ course, categoryName }) => {
           <button
             onClick={handleEnroll}
             disabled={loading}
-            className="font-medium text-blue-600 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
+            className="font-medium cursor-pointer text-blue-600 hover:text-blue-700 disabled:cursor-not-allowed disabled:opacity-50"
           >
             {loading ? (
               <span className="flex items-center gap-2">
