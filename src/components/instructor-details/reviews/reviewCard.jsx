@@ -1,4 +1,4 @@
-import Stars from "@/components/shared/Stars/Stars";
+import Stars from "@/components/Shared/Stars/stars";
 import { BsThreeDots } from "react-icons/bs";
 import { IoIosCheckmarkCircle } from "react-icons/io";
 

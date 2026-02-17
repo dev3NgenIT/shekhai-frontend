@@ -1,6 +1,6 @@
 import Image from "next/image";
-import LeftContent from "./LeftContent";
-import RightContent from "./RightContent";
+import LeftContent from "./leftContent";
+import RightContent from "./rightContent";
 
 export default function MentorCTA({ data }) {
   

@@ -1,11 +1,11 @@
 "use client"
-import BookEducator from "@/components/mentor-room/bookEducator/bookEducator";
-import CategoryHero from "@/components/mentor-room/categoryHero/categoryHero";
-import CategorySlider from "@/components/mentor-room/categorySlider/categorySlider";
-import GroupSession from "@/components/mentor-room/groupSession/groupSession";
-import Hero from "@/components/mentor-room/hero/hero";
-import PopularInstructor from "@/components/mentor-room/popularEducators/popularEducators";
-import SkillCTA from "@/components/mentor-room/skillCTA/skillCTA";
+import BookEducator from "@/components/Mentor-room/bookEducator/bookEducator";
+import CategoryHero from "@/components/Mentor-room/categoryHero/categoryHero";
+import CategorySlider from "@/components/Mentor-room/categorySlider/categorySlider";
+import GroupSession from "@/components/Mentor-room/groupSession/groupSession";
+import Hero from "@/components/Mentor-room/hero/hero";
+import PopularInstructor from "@/components/Mentor-room/popularEducators/popularEducators";
+import SkillCTA from "@/components/Mentor-room/skillCTA/skillCTA";
 import WebinarsSection from "@/components/webinar-room/webinarsSection/webinarsSection";
 import { useEffect, useState } from 'react';
 

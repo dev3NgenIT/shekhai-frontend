@@ -4,8 +4,8 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import Link from "next/link";
 import { FaRegUserCircle } from "react-icons/fa";
-import { CenterLInks } from "./CenterLInks";
-import SmNav from "./SmNav/SmNav";
+import { CenterLinks } from "./CenterLinks";
+import SmNav from "./smNav/smNav";
 
 
 
@@ -23,7 +23,7 @@ export default function Navbar() {
         />
       </Link>
 
-      <CenterLInks />
+      <CenterLinks />
 
       <div className="flex items-center justify-between gap-3">
         {/* <Link

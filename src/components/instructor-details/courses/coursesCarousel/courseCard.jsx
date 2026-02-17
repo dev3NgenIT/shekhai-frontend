@@ -1,6 +1,6 @@
 "use client";
 
-import Stars from "@/components/shared/Stars/Stars";
+import Stars from "@/components/Shared/Stars/stars";
 import { Button } from "@/components/ui/button";
 import {
   Card,

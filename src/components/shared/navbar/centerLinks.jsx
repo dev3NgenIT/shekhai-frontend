@@ -74,7 +74,7 @@ import {
 //   },
 // ];
 
-export function CenterLInks() {
+export function CenterLinks() {
   return (
     <NavigationMenu className={"hidden md:block"}>
       <NavigationMenuList>

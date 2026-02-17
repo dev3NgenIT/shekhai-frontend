@@ -8,7 +8,7 @@ import debounce from "lodash/debounce"; // Install: npm install lodash
 import { Button } from "@/components/ui/button";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import ProjectCard from "../shared/ProjectCard/ProjectCard";
+import ProjectCard from "../Shared/ProjectCard/ProjectCard";
 import Header from "./Header";
 
 export default function Component() {

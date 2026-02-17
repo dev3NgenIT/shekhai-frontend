@@ -1,7 +1,7 @@
 import Link from "next/link";
-import CompanyInfo from "./CompanyInfo";
-import Links from "./Links";
-import Socials from "./Socials";
+import CompanyInfo from "./companyInfo";
+import Links from "./links";
+import Socials from "./socials";
 
 const footerLinks = [
   {

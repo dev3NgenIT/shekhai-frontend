@@ -1,8 +1,8 @@
 "use client";
 
-import ProgressBar from "@/components/join-studybit/ProgressBar";
-import QuestionSection from "@/components/join-studybit/QuestionSection";
-import StepIndicator from "@/components/join-studybit/StepIndicator";
+import ProgressBar from "@/components/Join-studybit/ProgressBar";
+import QuestionSection from "@/components/Join-studybit/QuestionSection";
+import StepIndicator from "@/components/Join-studybit/StepIndicator";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { useState } from "react";
